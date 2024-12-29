@@ -21,6 +21,7 @@ for(var b of array)
 
 array.forEach((element,index) => {                                //the parameter for forEach is always an element(a/b/num/etc),index
     console.log("Element is",element,"and it's index is",index)
+    console.log(element)
 });                                                       
 
 //example 2  (using foreach loop for printing objects)
