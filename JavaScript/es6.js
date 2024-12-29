@@ -28,15 +28,15 @@ a=10
 out=(a%2==0)?"Even":"Odd"
 console.log(out)
 
-//spread operator
+//spread operator             //combine and give the results it knows the no of parameters
 
 Studentslist=["A","B","C","D","E","F","G","H"]
 newStudents=["I","J","K","L","M"]
 Combinedstudents=[...Studentslist,...newStudents]
 console.log(Combinedstudents)
 
-//rest operator
-
+//rest operator      //used within the function and it doesnt know the no of parameters
+ 
 function rest(...a)
 {
     return (a)
