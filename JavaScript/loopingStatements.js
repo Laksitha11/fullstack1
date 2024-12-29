@@ -23,29 +23,21 @@ array.forEach((element,index) => {                                //the paramete
     console.log("Element is",element,"and it's index is",index)
 });                                                       
 
-//example 2
+//example 2  (using foreach loop for printing objects)
 
 obj1={
     "firstName":"Laksitha",
     "lastName":"Mani",
     "age":20
      }
-console.log(obj1)
+     Object.entries(obj1).forEach(([key, value]) => {
+        console.log(`${key}: ${value}`);
+    });
 
-for(key in obj1){
-    value=obj1[key]
-    console.log(key,value)
-}
-
-/*obj1.forEach((value)=>{
-    console.log(value.firstName)
-});*/
+//using for..in loop
 
 for(const element in obj1){
     console.log(element)
 }
 
-for(const element of obj1)
-    {
-        console.log(element)      //obj1 is not iterable
-    }
+
