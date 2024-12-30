@@ -4,7 +4,7 @@ class ClassCompEg extends React.Component{
        {
         return(
             <div>
-                <h1>This is class Component Example</h1>
+                <h2>This is Class Component Example</h2>
             </div>
         )
        }
