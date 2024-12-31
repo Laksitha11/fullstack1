@@ -9,6 +9,7 @@ var NavBar=()=>{
                     <li><Link to="/About" className="link">About</Link></li>
                     <li><Link to="/Contact" className="link">Contact</Link></li>
                     <li><Link to="/Gallery" className="link">Gallery</Link></li>
+                    
                 </ul>
             </nav>
         </header>
