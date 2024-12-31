@@ -3,6 +3,8 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  width:100vw;
+  height:100vh;
 }
 
 .logo {
@@ -39,4 +41,39 @@
 
 .read-the-docs {
   color: #888;
+}
+/* App.css */
+
+/* Overall layout using flexbox */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Ensures the container takes full viewport height */
+}
+
+/* Main content area grows to fill the available space */
+.main-content {
+  flex-grow: 1; /* Ensures the main content expands to take up the space left by the footer */
+  padding: 20px;
+}
+
+/* Footer styles */
+footer {
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 20px 0;
+  margin-top: 20px; /* Space between content and footer */
+  width: 100%;
+}
+
+/* Optional: Make links inside the footer look better */
+footer a {
+  color: #fff;
+  text-decoration: none;
+  margin: 0 10px;
+}
+
+footer a:hover {
+  text-decoration: underline;
 }

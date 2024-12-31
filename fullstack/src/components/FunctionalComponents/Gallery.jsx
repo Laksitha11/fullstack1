@@ -5,9 +5,13 @@ const Gallery = () => {
     {
         setCount(count+1);
     }
-    function deccrement()
+    function decrement()
     {
         setCount(count-1);
+    }
+    function reset()
+    {
+        setCount(0);
     }
     return (
        <section>
@@ -15,7 +19,10 @@ const Gallery = () => {
        <h3>Learning State Concept</h3>
        <h3>The state of my variable counter is {count}</h3>
        <button onClick={increment}>CLick me to Increment</button>
-       <button onClick={deccrement}>Click me to Decrement</button>
+       <br></br>
+       <button onClick={decrement}>Click me to Decrement</button>
+       <br></br>
+       <button onClick={reset}>Click me to Reset</button>
        </section>
 );
 };
