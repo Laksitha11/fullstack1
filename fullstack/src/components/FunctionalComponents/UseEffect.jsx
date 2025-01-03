@@ -14,7 +14,10 @@ const UseEffect=()=>{
        // <h2>Text entered is {text}</h2>
         //</section>
     //)
-    var [post,setPost]=useState([])
+
+    // for posts
+
+   /* var [post,setPost]=useState([])
     useEffect(()=>{
         axios.get("https://jsonplaceholder.typicode.com/posts/")
         .then(res=>{console.log(res)
@@ -28,6 +31,26 @@ const UseEffect=()=>{
         <h2>Posts are</h2>
         <ol>
             {post.map((data)=><li key={data.userId}>{data.title}</li>)}
+        </ol>
+       </section>
+    ) */
+
+    //for photos
+    
+    var [photos,setPhotos]=useState([])
+    useEffect(()=>{
+        axios.get("https://jsonplaceholder.typicode.com/photos/")
+        .then(res=>{console.log(res)
+            setPhotos(res.data)
+        }).catch((err)=>console.log(err));
+
+    },[])
+    return(
+       <section>
+        <h1>Fetching data from json Placeholder API</h1>
+        <h2>Photos are</h2>
+        <ol>
+            {photos.map((data)=><li key={data.albumId}>{data.url}</li>)}
         </ol>
        </section>
     )
