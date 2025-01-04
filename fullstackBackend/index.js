@@ -1,89 +1,83 @@
-var express = require('express');                             
-var path = require('path');
-var mdb = require('mongoose');
-var User=require('./models/users');
-var app = express();
-const PORT = 3001;
-app.use(express.json())
+const express = require("express");
+const mongoose = require("mongoose");
+const bcrypt = require("bcryptjs");
+const cors = require("cors"); // Import CORS
+const env = require('dotenv')
+const app = express();
+const PORT = 3002;
 
-mdb.connect("mongodb://localhost:27017/").then(() => {
-    console.log("MongoDB Connection Successful")
-}).catch(() => {
-    console.log("Check your connection String")
-})
+env.config()
+// Middleware
+app.use(express.json());
+app.use(cors());
 
-app.get('/', (req, res) => {
-    res.send("welcome to backend server")
-})
+// MongoDB Connection
+mongoose
+  .connect(process.env.MONGO_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => console.log("MongoDB connected..."))
+  .catch((err) => console.error("MongoDB connection error:", err));
 
-app.get('/json', (req, res) => {
-    res.json("welcome to backend ")
-})
+// User Schema
+const userSchema = new mongoose.Schema({
+  firstname: String,
+  lastname: String,
+  email: { type: String, unique: true },
+  password: String,
+});
 
-app.get('/static', (req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html'))
-})
+const User = mongoose.models.User || mongoose.model("User", userSchema);
 
-app.post('/signup',(req,res)=>{
-     var {firstname,lastname,email,password}=req.body
-    
-     try{
-         var newUser=new User({
-             firstname:firstname,
-             lastname:lastname,
-             email:email,
-             password:password
-         })
-         var newUser=new User(req.body)
-         console.log(req.body.password);
-         newUser.save()
-         console.log("UserAdded Successfully")
-         res.status(200).send("User Added Successfully")
- 
-     }
-     catch(err)
-     {
-         console.log(err);
-     }
- })
+// Signup Route
+app.post("/signup", async (req, res) => {
+  const { firstname, lastname, email, password } = req.body;
 
- app.get('/getsignup',async(req,res)=>{
-     try{
-         var allSignUpRecords =await User.find()
-         res.json(allSignUpRecords)
-         console.log("all data fetched")
-     }
-     catch(err){
-         console.log("err")
-         res.send(err)
-     }
- })
+  if (!firstname || !lastname || !email || !password) {
+    return res.status(400).json({ success: false, message: "All fields are required" });
+  }
 
- app.post('/login',async(req,res)=>
-{
-    var {email,password}=req.body
-    try{
-        var existinguser=await User.findOne({email:email})
-        console.log(existinguser);
-        if(existinguser)
-        {
-            if(existinguser.password==password){
-        res.json({message:"Login successful",loggedIn:true})
-            }
-            else{
-                res.json({message:"Invalid Password",loggedIn:false})
-            }
-        }
-        else{
-            res.json({message:"Invalid Email or Password",loggedIn:false})
-        }
+  try {
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ success: false, message: "Email already in use" });
     }
-    catch(err)
-    {
-        console.log("Login Failure")
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const newUser = new User({ firstname, lastname, email, password: hashedPassword });
+    await newUser.save();
+
+    res.status(200).json({ success: true, message: "User registered successfully" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, message: "Server error. Please try again." });
+  }
+});
+
+// Login Route
+app.post("/login", async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(400).json({ success: false, message: "Invalid email or password" });
     }
-})
- 
- app.listen(PORT, () => {
-     console.log(`backend server started\nUrl: http://localhost:${PORT}`);
- });
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(400).json({ success: false, message: "Invalid email or password" });
+    }
+
+    res.status(200).json({ success: true, message: "Login successful" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, message: "Server error. Please try again." });
+  }
+});
+
+// Start Server
+app.listen(PORT, () => {
+  console.log(`Server running at http://localhost:${PORT}`);
+});

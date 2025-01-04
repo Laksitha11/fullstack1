@@ -1,10 +1,25 @@
-var mdb=require('mongoose')
-var UserSchema=mdb.Schema({
-    firstname:String,
-    lastname:String,
-    email:String,
-    password:String
+const mongoose = require("mongoose");
 
-})
-var user_Schema=mdb.model("users",UserSchema)
-module.exports=user_Schema
+const userSchema = new mongoose.Schema({
+  firstname: {
+    type: String,
+    required: true,
+  },
+  lastname: {
+    type: String,
+    required: true,
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  password: {
+    type: String,
+    required: true,
+  },
+});
+
+const User = mongoose.model("User", userSchema);
+
+module.exports = User;

@@ -6,6 +6,8 @@ var NavBar=()=>{
             <nav>
                 <ul>
                     <li><Link to="/" className="link">Home</Link></li>
+                    <li><Link to="/Signup" className="link">Signup</Link></li>
+                    <li><Link to="/Login" className="link">Login</Link></li>
                     <li><Link to="/About" className="link">About</Link></li>
                     <li><Link to="/Contact" className="link">Contact</Link></li>
                     <li><Link to="/Gallery" className="link">Gallery</Link></li>

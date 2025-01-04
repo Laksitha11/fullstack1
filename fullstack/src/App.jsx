@@ -1,5 +1,7 @@
 import './App.css';
 import Home from "./components/FunctionalComponents/Home";
+import Signup from "./components/FunctionalComponents/Signup";
+import Login from "./components/FunctionalComponents/Login";
 import About from "./components/FunctionalComponents/About";
 import Contact from "./components/FunctionalComponents/Contact";
 import Gallery from "./components/FunctionalComponents/Gallery";
@@ -21,6 +23,8 @@ function App() {
         <div className="main-content">
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/Signup" element={<Signup />} />
+            <Route path="/Login" element={<Login />} />
             <Route path="/About" element={<About college="Kongu Engineering College" clg1="Kongu Arts" clg2="Kongu Naturopathy" />} />
             <Route path="/Gallery" element={<Gallery />} />
             <Route path="/Contact" element={<Contact />} />
